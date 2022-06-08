@@ -17,3 +17,37 @@ Download the relevant files needed to run the main flow if date is 2021-08-15. T
 - [ ] 12.237
 
 # Q3. Saving the model and artifacts
+
+What is the file size of the DictVectorizer that we trained when the date is 2021-08-15?
+
+- [X] 13,000 bytes
+- [ ] 23,000 bytes
+- [ ] 33,000 bytes
+- [ ] 43,000 bytes
+
+
+# Q4. Creating a deployment with a CronSchedule
+What is the Cron expression to run a flow at 9 AM every 15th of the month?
+
+- [ ] * * 15 9 0
+- [ ] 9 15 * * *
+- [X] 0 9 15 * *
+- [ ] 0 15 9 1 *
+
+
+# Q5. Viewing the Deployment
+
+How many flow runs are scheduled by Prefect in advance? You should not be counting manually. There is a number of upcoming runs on the top right of the dashboard.
+
+- [ ] 0
+- [X] 3
+- [ ] 10
+- [ ] 25
+
+# Q6. Creating a work-queue
+What is the command to view the available work-queues?
+
+- [ ] prefect work-queue inspect
+- [X] prefect work-queue ls
+- [ ] prefect work-queue preview
+- [ ] prefect work-queue list

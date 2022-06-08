@@ -1,4 +1,7 @@
+import pickle
 import pandas as pd
+
+from typing import Any, List
 
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
@@ -12,6 +15,10 @@ from sklearn.metrics import mean_squared_error
 from prefect import flow, task
 from prefect.task_runners import SequentialTaskRunner
 from prefect.logging import get_run_logger
+
+def save_pickle(save_name: str, object: Any):
+    with open(save_name, 'wb') as file:
+        pickle.dump(object, file)
 
 @task
 def read_data(path):
@@ -35,7 +42,7 @@ def prepare_features(df, categorical, train=True):
     return df
 
 @task
-def train_model(df, categorical):
+def train_model(df: pd.DataFrame, categorical: List[str], date: str):
     logger = get_run_logger()
     
     train_dicts = df[categorical].to_dict(orient='records')
@@ -51,6 +58,9 @@ def train_model(df, categorical):
     y_pred = lr.predict(X_train)
     mse = mean_squared_error(y_train, y_pred, squared=False)
     logger.info(f"The MSE of training is: {mse}")
+    
+    save_pickle(f'./models/dv-{date}.pkl', dv)
+    save_pickle(f'./models/model-{date}.pkl', lr)
     return lr, dv
 
 @task
@@ -92,8 +102,21 @@ def main(date=None):
     df_val_processed = prepare_features(df_val, categorical, False)
 
     # train the model
-    lr, dv = train_model(df_train_processed, categorical).result()
+    lr, dv = train_model(df_train_processed, categorical, date).result()
     run_model(df_val_processed, categorical, dv, lr)
 
+from prefect.deployments import DeploymentSpec
+from prefect.orion.schemas.schedules import CronSchedule
+from prefect.flow_runners import SubprocessFlowRunner
+
 # main(date="2021-03-10")
-main(date="2021-08-15")
+# main(date="2021-08-15")
+
+DeploymentSpec(
+    flow=main,
+    parameters={"date": "2021-08-15"},
+    name="nyc-taxi-time-prediction",
+    schedule=CronSchedule(cron="0 9 15 * *"),
+    flow_runner=SubprocessFlowRunner(),
+    tags=['ml']
+)
