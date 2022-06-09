@@ -28,3 +28,13 @@ After the data is preprocessed and the mlflow server is running you only need to
 ```
 bash train_and_register.sh
 ```
+
+
+# 03 - Orchestation
+Again, I will be using the [NYC taxi dataset](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page). In this section I will use [prefect](https://www.prefect.io/opensource/v2/).
+
+You can see the prefect UI using: `prefect orion start`
+
+You can deploy using: `prefect deployment create 03-orchestration/homework.py`
+
+
