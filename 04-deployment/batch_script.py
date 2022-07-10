@@ -1,4 +1,3 @@
-from calendar import month
 import pathlib
 
 import pandas as pd

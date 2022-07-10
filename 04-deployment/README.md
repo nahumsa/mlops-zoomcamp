@@ -49,4 +49,10 @@ Which command you need to execute for that?
 
 `jupyter nbconvert --to=script starter.ipynb`
 
-# 
+# Q4. Virtual environment
+
+After installing the libraries, pipenv creates two files: Pipfile and Pipfile.lock. The Pipfile.lock file keeps the hashes of the dependencies we use for the virtual env.
+
+What's the first hash for the Scikit-Learn dependency?
+
+`"sha256:08ef968f6b72033c16c479c966bf37ccd49b06ea91b765e1cc27afefe723920b"`
