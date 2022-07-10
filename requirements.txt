@@ -6,3 +6,4 @@ mlflow==1.26.0
 hyperopt==0.2.7
 prefect==2.0b5
 python-dateutil==2.8.2
+pipenv==2022.7.4
