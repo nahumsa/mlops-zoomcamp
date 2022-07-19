@@ -3,6 +3,7 @@ import pathlib
 import pandas as pd
 
 import pickle
+import argparse
 
 from typing import Any, List, Tuple
 
@@ -49,9 +50,23 @@ def run(year: int, month: int) -> pd.DataFrame:
 
 
 if __name__ == '__main__':
-    year = 2021
-    month = 2
+    parser = argparse.ArgumentParser()
     
+    parser.add_argument(
+        "--year",
+        default=2021,
+        help="Year of the data."
+    )
+    
+    parser.add_argument(
+        "--month",
+        default=2,
+        help="Month of the data."
+    )
+    args = parser.parse_args()
+    year = int(args.year)
+    month = int(args.month)
+    print(year, month)    
     df_prediction = run(year, month)
 
     mean_prediction = df_prediction['prediction'].mean()
