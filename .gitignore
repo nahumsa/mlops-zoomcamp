@@ -2,3 +2,7 @@
 *.db
 mlruns/
 artifacts/
+__pycache__/
+.pytest_cache/
+.localstack/
+volume/
